@@ -31,7 +31,7 @@ end
 kafka_log_dirs =
   if node['cdap']['cdap_site'].key?('kafka.server.log.dirs')
     node['cdap']['cdap_site']['kafka.server.log.dirs']
-  elsif node['cdap']['version'].to_f < 3.5 && node['cdap']['cdap_site'].key?('kafka.log.dir')
+  elsif node['cdap']['cdap_site'].key?('kafka.log.dir')
     node['cdap']['cdap_site']['kafka.log.dir']
   else
     '/tmp/kafka-logs'
