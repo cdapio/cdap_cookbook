@@ -11,7 +11,7 @@ version          '2.22.0'
 end
 
 depends 'krb5_utils'
-recommends 'ambari'
+recommends 'ambari' # ~FC053
 
 %w(amazon centos debian redhat scientific ubuntu).each do |os|
   supports os
