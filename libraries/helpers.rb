@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Library:: helpers
 #
-# Copyright © 2016 Cask Data, Inc.
+# Copyright © 2016-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -70,6 +70,15 @@ module CDAP
       ssl['certpath'] = node['cdap']['cdap_security']['dashboard.ssl.cert']
       ssl['common_name'] = node['cdap']['security']['ssl_common_name']
       ssl
+    end
+
+    # Calls a block for each Pull Request currently opened against the caskdata/cdap repo, using the GitHub API
+    def cdap_open_prs
+      require 'github_api'
+      prs = ::Github::PullRequests.new
+      prs.list(user: 'caskdata', repo: 'cdap', state: 'open').reverse_each do |pr|
+        yield(pr)
+      end
     end
   end
 end

@@ -1,14 +1,14 @@
 #
 # Cookbook Name:: cdap
-# Attribute:: default
+# Provider:: merge_branch
 #
-# Copyright © 2013-2017 Cask Data, Inc.
+# Copyright © 2015-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#    http://www.apache.org/licenses/LICENSE-2.0
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,11 +17,15 @@
 # limitations under the License.
 #
 
-# Install Java and Hadoop clients by default
-default['cdap']['skip_prerequisites'] = false
+use_inline_resources if defined?(use_inline_resources)
 
-# User to run hadoop fs commands as
-default['cdap']['fs_superuser'] = 'hdfs'
+action :merge do
+  gr = new_resource.git_resource
+  branch = new_resource.branch
 
-# Install CDAP from repository packages or source
-default['cdap']['install_method'] = 'packages'
+  # Run the git merge command
+  execute "merge branch #{branch}" do
+    command "git branch -f #{branch} origin/#{branch} && git merge #{branch}"
+    cwd gr.destination
+  end
+end
