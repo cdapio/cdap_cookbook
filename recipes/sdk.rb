@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Recipe:: sdk
 #
-# Copyright © 2015 Cask Data, Inc.
+# Copyright © 2015-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,6 +26,81 @@ link '/usr/bin/node' do
   to '/usr/local/bin/node'
   action :create
   not_if 'test -e /usr/bin/node'
+end
+
+repo = node['cdap']['source']['git']['repo']['cdap-build']
+
+if node['cdap']['install_method'] == 'source' && !repo['branch'].nil? && !repo['branch'].empty?
+  if node['cdap']['source']['skip_build'].to_s == 'true'
+    log 'cdap-ambari-service-skip-build' do
+      message 'CDAP: Skipping build of cdap-ambari-service from source due to skip_build == true'
+    end
+  else
+    # Setting up Maven command for SDK build
+    ver = node['cdap']['version'].to_f
+    profiles = %w(dist examples)
+    profiles += %w(templates unit-tests) if ver >= 3.0
+    mvn_extra_opts = node['cdap']['source']['maven_extra_opts']
+    mvn_command = "mvn package -DskipTests -B -P #{profiles.join(',')} -U -V #{mvn_extra_opts}"
+    mvn_command += " -Dadditional.artifacts.dir=#{repo['dir']}/app-artifacts" if ver >= 3.3
+    mvn_command += " -Dsecurity.extensions.dir=#{repo['dir']}/security-extensions" if ver >= 3.5
+
+    # Modify the Maven command in the _maven recipe to build the SDK only
+    ruby_block 'modify-cdap-maven-resource' do
+      block do
+        begin
+          r = resources(bash: 'maven-build-cdap-packages')
+          r.command(mvn_command)
+        rescue Chef::Exceptions::ResourceNotFound
+          Chef::Log.fatal('Resource maven-build-cdap-packages not found... SDK will not build correctly')
+        end
+      end
+    end
+
+    # Modify the 'cdap' package resource in default recipe to do nothing
+    ruby_block 'modify-cdap-package-resource' do
+      block do
+        begin
+          r = resources(package: 'cdap')
+          r.action(:nothing)
+        rescue Chef::Exceptions::ResourceNotFound
+          Chef::Log.debug('Resource not found for package[cdap]... this is fine')
+        end
+      end
+    end
+
+    include_recipe 'cdap::_maven'
+
+    # This block updates the SDK ark resource
+    # - sets url attribute to a 'file:///path/to/local/sdk
+    # - sets version to a version parsed from sdk filename
+    #
+    ruby_block 'modify-cdap-sdk-ark-resources' do # ~FC014
+      block do
+        ::Dir["#{repo['dir']}/cdap/cdap-standalone/target/cdap-sdk*.zip"].each do |f|
+          begin
+            r = resources(ark: 'sdk')
+
+            # Set the url to the location of the built SDK.  Note, this also causes the checksum attr to be ignored
+            sdk_url = "file://#{f}"
+            Chef::Log.info("Modifying ark url for SDK to #{sdk_url}")
+            r.url(sdk_url)
+
+            # Set the version to the version of the built SDK
+            sdk_version = f.gsub(/.*cdap-sdk-(.*).zip/, '\1')
+            Chef::Log.info("Modifying ark version for SDK to #{sdk_version}")
+            r.version(sdk_version)
+
+            # Calculate and set the expected checksum
+            r.checksum(Digest::SHA256.hexdigest(File.read(f)))
+
+          rescue Chef::Exceptions::ResourceNotFound
+            Chef::Log.warn('No resource ark:sdk found in the resources collection... skipping')
+          end
+        end
+      end
+    end
+  end
 end
 
 ver = node['cdap']['version'].gsub(/-.*/, '')
