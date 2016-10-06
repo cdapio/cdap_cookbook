@@ -20,7 +20,7 @@
 # Create Auth Server/Router Java keystores
 %w(security.server router).each do |svc|
   execute "create-#{svc}.keystore.path-keystore" do
-    ssl = jks_opts(svc)
+    ssl = jks_opts(svc) if node['cdap'].key?('cdap_security')
     command <<-EOS
     keytool -genkey -noprompt -alias ext-auth -keysize 2048 -keyalg RSA \
       -keystore #{ssl['path']} -storepass #{ssl['password']} -keypass #{ssl['keypass']} \
@@ -33,7 +33,7 @@ end
 
 ### Generate a certificate if SSL is enabled
 execute 'generate-ui-ssl-cert' do
-  ssl = ssl_opts
+  ssl = ssl_opts if node['cdap'].key?('cdap_security')
   command <<-EOS
   openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
     -keyout #{ssl['keypath']} -out #{ssl['certpath']} \
