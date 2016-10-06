@@ -37,6 +37,14 @@ module CDAP
         end
       ssl_enabled.to_s == 'true' ? true : false
     end
+
+    def jks?(property)
+      if node['cdap']['cdap_security'].key?(property) && node['cdap']['cdap_security'][property] == 'JKS'
+        true
+      else
+        false
+      end
+    end
   end
 end
 
