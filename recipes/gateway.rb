@@ -24,24 +24,7 @@ package 'cdap-gateway' do
   version node['cdap']['version']
 end
 
-# Create a new keystore if SSL is enabled (and we don't already have one in place)
-execute 'create-router-ssl-keystore' do
-  if ssl_enabled?
-    password = node['cdap']['cdap_security']['router.ssl.keystore.password']
-    keypass =
-      if node['cdap']['cdap_security'].key?('router.ssl.keystore.keypassword')
-        node['cdap']['cdap_security']['router.ssl.keystore.keypassword']
-      else
-        node['cdap']['cdap_security']['router.ssl.keystore.password']
-      end
-    path = node['cdap']['cdap_security']['router.ssl.keystore.path']
-    common_name = node['cdap']['security']['ssl_common_name']
-  end
-
-  command "keytool -genkey -noprompt -alias ext-auth -keysize 2048 -keyalg RSA -keystore #{path} -storepass #{password} -keypass #{keypass} -dname 'CN=#{common_name}, OU=cdap, O=cdap, L=Palo Alto, ST=CA, C=US'"
-  not_if { ::File.exist?(path.to_s) }
-  only_if { ssl_enabled? && jks?('router.ssl.keystore.type') }
-end
+include_recipe 'cdap::ssl_keystore_certificates'
 
 svcs = ['cdap-router']
 unless node['cdap']['version'].to_f >= 2.6

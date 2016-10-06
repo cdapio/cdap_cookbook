@@ -47,6 +47,30 @@ module CDAP
         end
       jks == 'JKS' ? true : false
     end
+
+    # Return hash with SSL options for JKS
+    def jks_opts(prefix)
+      ssl = {}
+      ssl['password'] = node['cdap']['cdap_security']["#{prefix}.ssl.keystore.password"]
+      ssl['keypass'] =
+        if node['cdap']['cdap_security'].key?("#{prefix}.ssl.keystore.keypassword")
+          node['cdap']['cdap_security']["#{prefix}.ssl.keystore.keypassword"]
+        else
+          ssl['password']
+        end
+      ssl['path'] = node['cdap']['cdap_security']["#{prefix}.ssl.keystore.path"]
+      ssl['common_name'] = node['cdap']['security']['ssl_common_name']
+      ssl
+    end
+
+    # Return has with SSL options for OpenSSL
+    def ssl_opts
+      ssl = {}
+      ssl['keypath'] = node['cdap']['cdap_security']['dashboard.ssl.key']
+      ssl['certpath'] = node['cdap']['cdap_security']['dashboard.ssl.cert']
+      ssl['common_name'] = node['cdap']['security']['ssl_common_name']
+      ssl
+    end
   end
 end
 
