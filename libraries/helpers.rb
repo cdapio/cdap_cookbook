@@ -39,11 +39,13 @@ module CDAP
     end
 
     def jks?(property)
-      if node['cdap']['cdap_security'].key?(property) && node['cdap']['cdap_security'][property] == 'JKS'
-        true
-      else
-        false
-      end
+      jks =
+        if node['cdap'].key?('cdap_security') && node['cdap']['cdap_security'].key?(property)
+          node['cdap']['cdap_security'][property]
+        else
+          'JKS'
+        end
+      jks == 'JKS' ? true : false
     end
   end
 end
