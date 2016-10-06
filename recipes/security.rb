@@ -36,20 +36,7 @@ end
 
 # Create a new keystore if SSL is enabled
 execute 'create-security-server-ssl-keystore' do
-  ssl_enabled =
-    if node['cdap']['version'].to_f < 2.5 && node['cdap'].key?('cdap_site') &&
-       node['cdap']['cdap_site'].key?('security.server.ssl.enabled')
-      node['cdap']['cdap_site']['security.server.ssl.enabled']
-    elsif node['cdap'].key?('cdap_site') && node['cdap']['cdap_site'].key?('ssl.enabled')
-      node['cdap']['cdap_site']['ssl.enabled']
-    # This one is here for compatibility, but ssl.enabled takes precedence, if set
-    elsif node['cdap'].key?('cdap_site') && node['cdap']['cdap_site'].key?('security.server.ssl.enabled')
-      node['cdap']['cdap_site']['security.server.ssl.enabled']
-    else
-      false
-    end
-
-  if ssl_enabled.to_s == 'true'
+  if ssl_enabled?
     password = node['cdap']['cdap_security']['security.server.ssl.keystore.password']
     keypass =
       if node['cdap']['cdap_security'].key?('security.server.ssl.keystore.keypassword')
@@ -70,7 +57,7 @@ execute 'create-security-server-ssl-keystore' do
 
   command "keytool -genkey -noprompt -alias ext-auth -keysize 2048 -keyalg RSA -keystore #{path} -storepass #{password} -keypass #{keypass} -dname 'CN=#{common_name}, OU=cdap, O=cdap, L=Palo Alto, ST=CA, C=US'"
   not_if { ::File.exist?(path.to_s) }
-  only_if { ssl_enabled.to_s == 'true' && jks.to_s == 'true' }
+  only_if { ssl_enabled? && jks.to_s == 'true' }
 end
 
 # Manage Authentication realmfile
