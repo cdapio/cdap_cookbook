@@ -63,7 +63,7 @@ module CDAP
       ssl
     end
 
-    # Return has with SSL options for OpenSSL
+    # Return hash with SSL options for OpenSSL
     def ssl_opts
       ssl = {}
       ssl['keypath'] = node['cdap']['cdap_security']['dashboard.ssl.key']
