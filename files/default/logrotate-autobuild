@@ -1,0 +1,8 @@
+/var/log/maven-autobuild.log {
+    rotate 7
+    daily
+    missingok
+    notifempty
+    copytruncate
+    compress
+}

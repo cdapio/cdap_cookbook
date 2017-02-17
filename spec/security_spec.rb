@@ -6,6 +6,7 @@ describe 'cdap::security' do
       ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
         node.automatic['domain'] = 'example.com'
         stub_command(/update-alternatives --display /).and_return(false)
+        stub_command(/test -L /).and_return(false)
       end.converge(described_recipe)
     end
     pkg = 'cdap-auth-server'
@@ -35,6 +36,8 @@ describe 'cdap::security' do
         node.override['cdap']['cdap_site']['security.authentication.handlerClassName'] = 'co.cask.cdap.security.server.BasicAuthenticationHandler'
         node.override['cdap']['cdap_site']['security.authentication.basic.realmfile'] = '/test/tmp/testrealm'
         node.override['cdap']['security']['realmfile']['testuser'] = 'testpass'
+        stub_command(/update-alternatives --display /).and_return(false)
+        stub_command(/test -L /).and_return(false)
       end.converge(described_recipe)
     end
 

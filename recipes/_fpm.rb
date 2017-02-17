@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: cdap
-# Attribute:: default
+# Recipe:: _fpm
 #
-# Copyright © 2013-2017 Cask Data, Inc.
+# Copyright © 2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,11 +17,13 @@
 # limitations under the License.
 #
 
-# Install Java and Hadoop clients by default
-default['cdap']['skip_prerequisites'] = false
+# We need fpm for all builds, and rpm-build on RPM-based distributions
+chef_gem 'fpm' do
+  action :install
+  version '1.4.0'
+end
 
-# User to run hadoop fs commands as
-default['cdap']['fs_superuser'] = 'hdfs'
-
-# Install CDAP from repository packages or source
-default['cdap']['install_method'] = 'packages'
+package 'rpm-build' do
+  action :install
+  only_if { node['platform_family'] == 'rhel' }
+end

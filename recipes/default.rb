@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Recipe:: default
 #
-# Copyright © 2013-2014 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,7 +22,11 @@ unless node['cdap'].key?('skip_prerequisites') && node['cdap']['skip_prerequisit
   include_recipe 'cdap::prerequisites'
 end
 
-include_recipe 'cdap::repo'
+if node['cdap'].key?('install_method') && node['cdap']['install_method'] == 'source'
+  include_recipe 'cdap::_maven'
+else
+  include_recipe 'cdap::repo'
+end
 
 # add global CDAP_HOME environment variable
 file '/etc/profile.d/cdap_home.sh' do
@@ -31,11 +35,6 @@ file '/etc/profile.d/cdap_home.sh' do
     export PATH=$PATH:$CDAP_HOME/bin
   EOS
   mode '0755'
-end
-
-package 'cdap' do
-  version node['cdap']['version']
-  action :install
 end
 
 if node['cdap'].key?('cdap_env') && node['cdap']['cdap_env'].key?('log_dir')
@@ -66,6 +65,11 @@ if node['cdap'].key?('cdap_env') && node['cdap']['cdap_env'].key?('log_dir')
       to cdap_log_dir
     end
   end
+end
+
+package 'cdap' do
+  version node['cdap']['version']
+  action :install
 end
 
 include_recipe 'cdap::config'
