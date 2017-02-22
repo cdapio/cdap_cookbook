@@ -27,9 +27,14 @@ module CDAP
         if node['cdap']['version'].to_f < 2.5 && node['cdap'].key?('cdap_site') &&
            node['cdap']['cdap_site'].key?('security.server.ssl.enabled')
           node['cdap']['cdap_site']['security.server.ssl.enabled']
+        elsif node['cdap']['version'].to_f < 4.0 && node['cdap'].key?('cdap_site') &&
+              node['cdap']['cdap_site'].key?('ssl.enabled')
+          node['cdap']['cdap_site']['ssl.enabled']
+        elsif node['cdap'].key?('cdap_site') && node['cdap']['cdap_site'].key?('ssl.external.enabled')
+          node['cdap']['cdap_site']['ssl.external.enabled']
+        # Now, do fallback ssl.enabled then security.server.ssl.enabled
         elsif node['cdap'].key?('cdap_site') && node['cdap']['cdap_site'].key?('ssl.enabled')
           node['cdap']['cdap_site']['ssl.enabled']
-        # This one is here for compatibility, but ssl.enabled takes precedence, if set
         elsif node['cdap'].key?('cdap_site') && node['cdap']['cdap_site'].key?('security.server.ssl.enabled')
           node['cdap']['cdap_site']['security.server.ssl.enabled']
         else
