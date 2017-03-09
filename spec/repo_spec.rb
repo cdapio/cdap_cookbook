@@ -15,27 +15,20 @@ describe 'cdap::repo' do
     end
   end
 
-  context 'using 2.8.2' do
-    let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
-        node.override['cdap']['version'] = '2.8.2-1'
-      end.converge(described_recipe)
-    end
+  %w(
+    3.0.6-1
+    3.3.3-1
+  ).each do |ver|
+    context "using #{ver.split('-').first}" do
+      let(:chef_run) do
+        ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+          node.override['cdap']['version'] = ver
+        end.converge(described_recipe)
+      end
 
-    it 'adds cdap-2.8 yum repository' do
-      expect(chef_run).to add_yum_repository('cdap-2.8')
-    end
-  end
-
-  context 'using 2.5.2' do
-    let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
-        node.override['cdap']['version'] = '2.5.2-1'
-      end.converge(described_recipe)
-    end
-
-    it 'adds cdap-2.5 yum repository' do
-      expect(chef_run).to add_yum_repository('cdap-2.5')
+      it "adds cdap-#{ver.to_f} yum repository" do
+        expect(chef_run).to add_yum_repository("cdap-#{ver.to_f}")
+      end
     end
   end
 

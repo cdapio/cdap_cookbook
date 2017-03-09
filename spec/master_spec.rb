@@ -18,7 +18,9 @@ describe 'cdap::master' do
       cdap-hbase-compat-0.98
       cdap-hbase-compat-1.0
       cdap-hbase-compat-1.0-cdh
+      cdap-hbase-compat-1.0-cdh5.5.0
       cdap-hbase-compat-1.1
+      cdap-hbase-compat-1.2-cdh5.7.0
     ).each do |compat|
       it "installs #{compat} package" do
         expect(chef_run).to install_package(compat)
@@ -46,13 +48,13 @@ describe 'cdap::master' do
     end
   end
 
-  context 'using cdap <= 2.5.2' do
+  context 'using CDAP 3.0' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.5) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
         node.automatic['domain'] = 'example.com'
         node.default['hadoop']['hdfs_site']['dfs.datanode.max.transfer.threads'] = '4096'
         node.default['hadoop']['mapred_site']['mapreduce.framework.name'] = 'yarn'
-        node.override['cdap']['version'] = '2.5.2-1'
+        node.override['cdap']['version'] = '3.0.6-1'
         stub_command(/update-alternatives --display /).and_return(false)
         stub_command(/test -L /).and_return(false)
       end.converge(described_recipe)
@@ -60,18 +62,6 @@ describe 'cdap::master' do
 
     it 'installs cdap-hbase-compat-0.94 package' do
       expect(chef_run).to install_package('cdap-hbase-compat-0.94')
-    end
-
-    it 'does not install cdap-hbase-compat-0.98 package' do
-      expect(chef_run).not_to install_package('cdap-hbase-compat-0.98')
-    end
-
-    it 'does not install cdap-hbase-compat-1.0 package' do
-      expect(chef_run).not_to install_package('cdap-hbase-compat-1.0')
-    end
-
-    it 'does not install cdap-hbase-compat-1.1 package' do
-      expect(chef_run).not_to install_package('cdap-hbase-compat-1.1')
     end
   end
 end

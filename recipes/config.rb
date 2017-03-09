@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Recipe:: config
 #
-# Copyright © 2013-2016 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -41,15 +41,13 @@ end
 end # End cdap-site.xml cdap-security.xml
 
 # Setup cdap-env.sh
-if node['cdap'].key?('cdap_env') && node['cdap']['version'].to_f >= 2.7 # ~FC023
-  template "#{cdap_conf_dir}/cdap-env.sh" do
-    source 'generic-env.sh.erb'
-    mode '0644'
-    owner 'cdap'
-    group 'cdap'
-    variables :options => node['cdap']['cdap_env']
-    action :create
-  end
+template "#{cdap_conf_dir}/cdap-env.sh" do
+  source 'generic-env.sh.erb'
+  mode '0644'
+  owner 'cdap'
+  group 'cdap'
+  variables :options => node['cdap']['cdap_env']
+  action :create
 end # End cdap-env.sh
 
 execute 'copy logback.xml from conf.dist' do
@@ -59,10 +57,7 @@ end
 
 execute 'copy logback-container.xml from conf.dist' do
   command "cp /etc/cdap/conf.dist/logback-container.xml /etc/cdap/#{node['cdap']['conf_dir']}"
-  not_if do
-    ::File.exist?("/etc/cdap/#{node['cdap']['conf_dir']}/logback-container.xml") ||
-      node['cdap']['version'].to_f < 2.8
-  end
+  not_if { ::File.exist?("/etc/cdap/#{node['cdap']['conf_dir']}/logback-container.xml") }
 end
 
 # Update alternatives to point to our configuration
