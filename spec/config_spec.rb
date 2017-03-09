@@ -9,6 +9,7 @@ describe 'cdap::config' do
         node.default['hadoop']['mapred_site']['mapreduce.framework.name'] = 'yarn'
         node.default['cdap']['cdap_site']['hdfs.user'] = 'cdap'
         node.default['cdap']['cdap_env']['log_dir'] = '/test/logs/cdap'
+        node.default['cdap']['cdap_security']['some.thing'] = 'foobar'
         stub_command(/update-alternatives --display /).and_return(false)
       end.converge(described_recipe)
     end
@@ -21,8 +22,14 @@ describe 'cdap::config' do
       expect(chef_run).to run_execute('copy logback.xml from conf.dist')
     end
 
-    it 'creates /etc/cdap/conf.chef/cdap-env.sh' do
-      expect(chef_run).to create_template('/etc/cdap/conf.chef/cdap-env.sh')
+    %w(
+      cdap-env.sh
+      cdap-security.xml
+      cdap-site.xml
+    ).each do |tmpl|
+      it "creates /etc/cdap/conf.chef/#{tmpl}" do
+        expect(chef_run).to create_template("/etc/cdap/conf.chef/#{tmpl}")
+      end
     end
 
     it 'runs execute[copy logback-container.xml from conf.dist]' do
