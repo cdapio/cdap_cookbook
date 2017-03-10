@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Recipe:: default
 #
-# Copyright © 2013-2014 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,16 +17,11 @@
 # limitations under the License.
 #
 
-# Installs prerequisites, setup repo, set CDAP_HOME, and install base package
+# Installs base package, creates log directory, and write out CDAP configuration
 include_recipe 'cdap::base'
 
 if node['cdap'].key?('cdap_env') && node['cdap']['cdap_env'].key?('log_dir')
-  cdap_log_dir =
-    if node['cdap']['cdap_env'].key?('log_dir')
-      node['cdap']['cdap_env']['log_dir']
-    else
-      '/var/log/cdap'
-    end
+  cdap_log_dir = node['cdap']['cdap_env']['log_dir']
 
   directory cdap_log_dir do
     owner 'cdap'

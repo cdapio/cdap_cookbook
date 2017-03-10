@@ -26,19 +26,16 @@ end
 
 include_recipe 'cdap::ssl_keystore_certificates'
 
-svc = 'cdap-router'
-attrib = svc.gsub('cdap-', '').tr('-', '_')
-
-template "/etc/init.d/#{svc}" do
+template '/etc/init.d/cdap-router' do
   source 'cdap-service.erb'
   mode '0755'
   owner 'root'
   group 'root'
   action :create
-  variables node['cdap'][attrib]
+  variables node['cdap']['router']
 end
 
-service svc do
-  status_command "service #{svc} status"
-  action node['cdap'][attrib]['init_actions']
+service 'cdap-router' do
+  status_command 'service cdap-router status'
+  action node['cdap']['router']['init_actions']
 end
