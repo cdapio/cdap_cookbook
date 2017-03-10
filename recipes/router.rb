@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: cdap
-# Recipe:: gateway
+# Recipe:: router
 #
 # Copyright © 2013-2017 Cask Data, Inc.
 #
@@ -17,5 +17,25 @@
 # limitations under the License.
 #
 
-include_recipe 'cdap::router'
-Chef::Log.warn('The cdap::gateway recipe is deprecated. Please, replace it with cdap::router in your run_list.')
+include_recipe 'cdap::default'
+
+package 'cdap-gateway' do
+  action :install
+  version node['cdap']['version']
+end
+
+include_recipe 'cdap::ssl_keystore_certificates'
+
+template '/etc/init.d/cdap-router' do
+  source 'cdap-service.erb'
+  mode '0755'
+  owner 'root'
+  group 'root'
+  action :create
+  variables node['cdap']['router']
+end
+
+service 'cdap-router' do
+  status_command 'service cdap-router status'
+  action node['cdap']['router']['init_actions']
+end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cdap::gateway' do
+describe 'cdap::router' do
   context 'using default cdap version' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
