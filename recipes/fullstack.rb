@@ -19,6 +19,6 @@
 
 include_recipe 'cdap::default'
 
-%w(cli gateway kafka master security ui).each do |recipe|
+%w(cli kafka master router security ui).each do |recipe|
   include_recipe "cdap::#{recipe}"
 end
