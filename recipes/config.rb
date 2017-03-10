@@ -41,17 +41,19 @@ end
 end # End cdap-site.xml cdap-security.xml
 
 # Setup cdap-env.sh
-template "#{cdap_conf_dir}/cdap-env.sh" do
-  source 'generic-env.sh.erb'
-  mode '0644'
-  owner 'cdap'
-  group 'cdap'
-  variables :options => node['cdap']['cdap_env']
-  action :create
+if node['cdap'].key?('cdap_env')
+  template "#{cdap_conf_dir}/cdap-env.sh" do
+    source 'generic-env.sh.erb'
+    mode '0644'
+    owner 'cdap'
+    group 'cdap'
+    variables :options => node['cdap']['cdap_env']
+    action :create
+  end
 end # End cdap-env.sh
 
 execute 'copy logback.xml from conf.dist' do
-  command "cp /etc/cdap/conf.dist/logback.xml /etc/cdap/#{node['cdap']['conf_dir']}"
+  command "cp -f /etc/cdap/conf.dist/logback.xml /etc/cdap/#{node['cdap']['conf_dir']}"
   not_if { ::File.exist?("/etc/cdap/#{node['cdap']['conf_dir']}/logback.xml") }
 end
 
