@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Attribute:: services
 #
-# Copyright © 2015-2016 Cask Data, Inc.
+# Copyright © 2015-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,13 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-name = 'gateway'
-default['cdap'][name]['user'] = 'cdap'
-default['cdap'][name]['init_name'] = name.split.map(&:capitalize).join(' ')
-default['cdap'][name]['init_krb5'] = false
-default['cdap'][name]['init_cmd'] = "/opt/cdap/#{name}/bin/svc-#{name}"
-default['cdap'][name]['init_actions'] = [:nothing]
 
 name = 'kafka'
 default['cdap'][name]['user'] = 'cdap'
@@ -79,10 +72,3 @@ default['cdap'][name]['init_krb5'] = false
     end
   default['cdap'][svc]['init_actions'] = [:nothing]
 end
-
-name = 'web_app'
-default['cdap'][name]['user'] = 'cdap'
-default['cdap'][name]['init_name'] = name.split('_').map(&:capitalize).join(' ')
-default['cdap'][name]['init_krb5'] = false
-default['cdap'][name]['init_cmd'] = "/opt/cdap/#{name}/bin/svc-#{name.tr('_', '-')}"
-default['cdap'][name]['init_actions'] = [:nothing]
