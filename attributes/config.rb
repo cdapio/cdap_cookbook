@@ -31,12 +31,6 @@ default['cdap']['cdap_site']['log.retention.duration.days'] = '7'
 default['cdap']['cdap_site']['zookeeper.quorum'] = "#{node['fqdn']}:2181/#{node['cdap']['cdap_site']['root.namespace']}"
 default['cdap']['cdap_site']['router.bind.address'] = node['fqdn']
 default['cdap']['cdap_site']['router.server.address'] = node['fqdn']
-# These are only used with CDAP < 2.6
-if node['cdap']['version'].to_f < 2.6
-  default['cdap']['cdap_site']['gateway.server.address'] = node['fqdn']
-  default['cdap']['cdap_site']['gateway.server.port'] = '10000'
-  default['cdap']['cdap_site']['gateway.memory.mb'] = '512'
-end
 
 # HDP 2.2+ support
 hdp_version =
