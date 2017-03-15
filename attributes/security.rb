@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Attribute:: security
 #
-# Copyright © 2013-2016 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,8 +25,10 @@ end
 
 # SSL Settings
 default['cdap']['cdap_security']['security.server.ssl.keystore.password'] = 'somedefaultpassword'
+default['cdap']['cdap_security']['security.server.ssl.keystore.keypassword'] = 'somedefaultkeypassword'
 default['cdap']['cdap_security']['security.server.ssl.keystore.path'] = "/etc/cdap/#{node['cdap']['conf_dir']}/security.jks"
 default['cdap']['cdap_security']['router.ssl.keystore.password'] = 'somedefaultpassword'
+default['cdap']['cdap_security']['router.ssl.keystore.keypassword'] = 'somedefaultkeypassword'
 default['cdap']['cdap_security']['router.ssl.keystore.path'] = "/etc/cdap/#{node['cdap']['conf_dir']}/router.jks"
 default['cdap']['cdap_security']['dashboard.ssl.key'] = "/etc/cdap/#{node['cdap']['conf_dir']}/dashboard.key"
 default['cdap']['cdap_security']['dashboard.ssl.cert'] = "/etc/cdap/#{node['cdap']['conf_dir']}/dashboard.crt"
