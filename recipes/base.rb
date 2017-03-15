@@ -33,6 +33,9 @@ file '/etc/profile.d/cdap_home.sh' do
   mode '0755'
 end
 
+# Create CDAP user, if configured (otherwise, delegate to package)
+include_recipe 'cdap::user' if node['cdap']['create_cdap_user'].to_s == 'true'
+
 # Install cdap base package
 package 'cdap' do
   action :install
