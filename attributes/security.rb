@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Attribute:: security
 #
-# Copyright © 2013-2016 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -104,4 +104,6 @@ if node['cdap']['cdap_site'].key?('kerberos.auth.enabled') && node['cdap']['cdap
   default['cdap']['cdap_site']['cdap.master.kerberos.keytab'] = node['cdap']['kerberos']['cdap_keytab']
   default['cdap']['cdap_site']['cdap.master.kerberos.principal'] = node['cdap']['kerberos']['cdap_principal']
 
+  # COOK-117
+  default['cdap']['cdap_site']['security.keytab.path'] = "#{node['krb5']['keytabs_dir']}/${name}.headless.keytab"
 end
