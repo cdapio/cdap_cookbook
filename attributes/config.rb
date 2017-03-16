@@ -28,6 +28,10 @@ default['cdap']['cdap_site']['hdfs.namespace'] = "/#{node['cdap']['cdap_site']['
 default['cdap']['cdap_site']['hdfs.user'] = 'yarn'
 default['cdap']['cdap_site']['kafka.seed.brokers'] = "#{node['fqdn']}:9092"
 default['cdap']['cdap_site']['log.retention.duration.days'] = '7'
+# COOK-85
+if node['cdap']['version'].to_f < 4.0
+  default['cdap']['cdap_site']['metadata.updates.kafka.broker.list'] = node['cdap']['cdap_site']['kafka.seed.brokers']
+end
 default['cdap']['cdap_site']['zookeeper.quorum'] = "#{node['fqdn']}:2181/#{node['cdap']['cdap_site']['root.namespace']}"
 default['cdap']['cdap_site']['router.bind.address'] = node['fqdn']
 default['cdap']['cdap_site']['router.server.address'] = node['fqdn']
