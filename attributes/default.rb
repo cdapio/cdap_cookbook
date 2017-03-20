@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Attribute:: default
 #
-# Copyright © 2013-2015 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,3 +22,10 @@ default['cdap']['skip_prerequisites'] = false
 
 # User to run hadoop fs commands as
 default['cdap']['fs_superuser'] = 'hdfs'
+
+# User information for "cdap" user (otherwise delegates to packages)
+default['cdap']['create_cdap_user'] = false
+default['cdap']['cdap_user']['username'] = 'cdap'
+default['cdap']['cdap_user']['group'] = 'cdap'
+default['cdap']['cdap_user']['uid'] = '11011'
+default['cdap']['cdap_user']['gid'] = '11011'
