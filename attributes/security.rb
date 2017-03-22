@@ -17,10 +17,14 @@
 # limitations under the License.
 #
 
-# COOK-74
-if node['cdap'].key?('cdap_site') && node['cdap']['cdap_site'].key?('security.server.ssl.enabled') &&
-   !node['cdap']['cdap_site'].key?('ssl.enabled')
-  default['cdap']['cdap_site']['ssl.enabled'] = node['cdap']['cdap_site']['security.server.ssl.enabled']
+# COOK-74 and COOK-116
+ssl_props = %w(security.server.ssl.enabled ssl.enabled ssl.external.enabled)
+set_ssl_props = ssl_props & node['cdap']['cdap_site'].keys
+# check if more than one ssl property set and use the "latest"
+if set_ssl_props.length >= 1
+  ssl_props.each do |prop|
+    default['cdap']['cdap_site'][prop] = node['cdap']['cdap_site'][set_ssl_props.last]
+  end
 end
 
 # SSL Settings
