@@ -28,6 +28,10 @@ describe 'cdap::sdk' do
       expect(chef_run).to create_template('/etc/init.d/cdap-sdk')
     end
 
+    it 'creates /etc/profile.d/cdap-sdk.sh from template' do
+      expect(chef_run).to create_template('/etc/profile.d/cdap-sdk.sh')
+    end
+
     it 'creates cdap-sdk service and starts it' do
       expect(chef_run).to start_service('cdap-sdk')
       expect(chef_run).to enable_service('cdap-sdk')

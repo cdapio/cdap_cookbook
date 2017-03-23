@@ -46,6 +46,10 @@ describe 'cdap::master' do
     it "creates #{pkg} service, but does not run it" do
       expect(chef_run).not_to start_service(pkg)
     end
+
+    it 'creates cdap-upgrade-tool resource, but does not execute it' do
+      expect(chef_run).not_to run_execute('cdap-upgrade-tool')
+    end
   end
 
   context 'using CDAP 3.0' do
