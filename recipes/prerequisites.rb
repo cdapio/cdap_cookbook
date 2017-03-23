@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Recipe:: prerequisites
 #
-# Copyright © 2013-2016 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,9 +36,7 @@ end
 end
 
 # Hive is optional
-if node['cdap'].key?('cdap_site') && node['cdap']['cdap_site'].key?('explore.enabled') &&
-   node['cdap']['cdap_site']['explore.enabled'].to_s == 'true'
-
+if cdap_explore?
   log 'hive-explore-enabled' do
     message 'Explore module enabled, installing Hive libraries'
   end

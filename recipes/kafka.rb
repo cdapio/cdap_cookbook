@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Recipe:: kafka
 #
-# Copyright © 2013-2014 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ package 'cdap-kafka' do
   version node['cdap']['version']
 end
 
-if node['cdap']['version'].to_f >= 3.5 && node['cdap']['cdap_site'].key?('kafka.log.dir')
+if node['cdap']['version'].to_f >= 3.5 && cdap_property?('kafka.log.dir')
   Chef::Log.warn('kafka.log.dir has been deprecated. Please use kafka.server.log.dirs instead.')
 end
 
