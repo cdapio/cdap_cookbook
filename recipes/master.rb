@@ -65,10 +65,6 @@ if hadoop_kerberos?
       variables my_vars
     end # End /etc/default/cdap-master
 
-    include_recipe 'yum-epel' if node['platform_family'] == 'rhel'
-
-    package 'kstart'
-
     group 'hadoop' do
       append true
       members ['cdap']
@@ -76,11 +72,11 @@ if hadoop_kerberos?
     end
   else
     # Hadoop is secure, but we're not configured for Kerberos
-    log 'bad-security-configuration' do
-      message "Invalid security configuration: You must specify node['cdap']['cdap_site']['kerberos.auth.enabled']"
+    log 'bad-kerberos-configuration' do
+      message "Invalid Kerberos configuration: You must specify node['cdap']['cdap_site']['kerberos.auth.enabled']"
       level :error
     end
-    Chef::Application.fatal!('Invalid Hadoop/CDAP security configuration')
+    Chef::Application.fatal!('Invalid Hadoop/CDAP kerberos configuration')
   end
 end
 
