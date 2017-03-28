@@ -4,8 +4,6 @@ LineLength:
   Max: 600
 Documentation:
   Enabled: False
-Style/SpaceBeforeFirstArg:
-  Enabled: false
 AsciiComments:
   Enabled: false
 Metrics/AbcSize:
@@ -21,4 +19,8 @@ Metrics/ModuleLength:
 Metrics/PerceivedComplexity:
   Enabled: false
 Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/SpaceBeforeFirstArg:
+  Enabled: false
+Style/SymbolArray:
   Enabled: false
