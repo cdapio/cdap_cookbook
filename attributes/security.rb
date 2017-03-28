@@ -29,8 +29,10 @@ end
 
 # SSL Settings
 default['cdap']['cdap_security']['security.server.ssl.keystore.password'] = 'somedefaultpassword'
+default['cdap']['cdap_security']['security.server.ssl.keystore.keypassword'] = 'somedefaultkeypassword'
 default['cdap']['cdap_security']['security.server.ssl.keystore.path'] = "/etc/cdap/#{node['cdap']['conf_dir']}/security.jks"
 default['cdap']['cdap_security']['router.ssl.keystore.password'] = 'somedefaultpassword'
+default['cdap']['cdap_security']['router.ssl.keystore.keypassword'] = 'somedefaultkeypassword'
 default['cdap']['cdap_security']['router.ssl.keystore.path'] = "/etc/cdap/#{node['cdap']['conf_dir']}/router.jks"
 default['cdap']['cdap_security']['dashboard.ssl.key'] = "/etc/cdap/#{node['cdap']['conf_dir']}/dashboard.key"
 default['cdap']['cdap_security']['dashboard.ssl.cert'] = "/etc/cdap/#{node['cdap']['conf_dir']}/dashboard.crt"
