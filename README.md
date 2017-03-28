@@ -6,24 +6,25 @@
 [![Code Climate](https://codeclimate.com/github/caskdata/cdap_cookbook/badges/gpa.svg)](https://codeclimate.com/github/caskdata/cdap_cookbook)
 [![Build Status](https://jenkins-01.eastus.cloudapp.azure.com/job/cdap-cookbook/badge/icon)](https://jenkins-01.eastus.cloudapp.azure.com/job/cdap-cookbook/)
 
-# Requirements
+## Requirements
 
-* Oracle Java JDK 7+ with JCE (provided by `java` cookbook)
-* Hadoop 2.0+ HDFS, YARN, ZooKeeper, Hive, and HBase (provided by `hadoop` cookbook)
+* Oracle Java JDK 7+ with JCE
+* Hadoop 2.0+ HDFS, YARN, ZooKeeper, Hive, and HBase
 
-# Usage
+## Usage
 
-## Distributed
+### Distributed
 
-The simplest usage is to install a complete CDAP stack on a single machine, using the `cdap::fullstack` recipe. Directories
-in HDFS are created using the `cdap::init` recipe. The CDAP Upgrade Tool can be run after upgrading CDAP by using the
-`cdap::upgrade` recipe.
+The simplest usage is to install a complete CDAP stack on a single machine,
+using the `cdap::fullstack` recipe. Directories in HDFS are created using the
+`cdap::init` recipe. The CDAP Upgrade Tool can be run after upgrading CDAP by
+using the `cdap::upgrade` recipe.
 
-## Standalone/SDK
+### Standalone/SDK
 
 Use the `cdap::sdk` recipe.
 
-# Attributes
+## Attributes
 
 * `['cdap']['conf_dir']` - The directory used inside `/etc/cdap` and used via the alternatives system. Default `conf.chef`
 * `['cdap']['repo']['apt_repo_url']` - Specifies URL for fetching packages from APT
@@ -31,7 +32,7 @@ Use the `cdap::sdk` recipe.
 * `['cdap']['repo']['yum_repo_url']` - Specifies URL for fetching packages from YUM
 * `['cdap']['version']` - CDAP package version to install, must exist in the given repository
 
-# Recipes
+## Recipes
 
 * `cli` - Installs `cdap-cli` package
 * `config` - Configures all services
@@ -48,13 +49,12 @@ Use the `cdap::sdk` recipe.
 * `security_realm_file` - Creates the realm file 
 * `ui` - Installs the `cdap-ui` package and service, replaces `web_app`
 * `upgrade` - Executes the CDAP Upgrade Tool, run on Master node
-* `web_app` - Installs the `cdap-web-app` package and service
 
-# Author
+## Author
 
 Author:: Cask Data, Inc. (<ops@cask.co>)
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this software except in compliance with the License.
