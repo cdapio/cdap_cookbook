@@ -100,7 +100,7 @@ end
 %W(#{ns_path} #{tx_snapshot_dir} #{user_path}).each do |path|
   execute "initaction-create-hdfs-path#{path.tr('/', '-')}" do
     command "hadoop fs -mkdir -p #{path} && hadoop fs -chown #{hdfs_user} #{path}"
-    not_if "hadoop fs -test -d #{path}", :user => hdfs_user
+    not_if "hadoop fs -test -d #{path}", user: hdfs_user
     timeout 300
     user node['cdap']['fs_superuser']
     retries 3
@@ -112,7 +112,7 @@ end
   %w(done done_intermediate).each do |dir|
     execute "initaction-create-hdfs-mr-jhs-staging-#{dir.tr('_', '-')}-#{u}" do
       only_if "getent passwd #{u}"
-      not_if "hadoop fs -test -d /tmp/hadoop-yarn/staging/history/#{dir}/#{u}", :user => u
+      not_if "hadoop fs -test -d /tmp/hadoop-yarn/staging/history/#{dir}/#{u}", user: u
       command "hadoop fs -mkdir -p /tmp/hadoop-yarn/staging/history/#{dir}/#{u} && hadoop fs -chown #{u} /tmp/hadoop-yarn/staging/history/#{dir}/#{u} && hadoop fs -chmod 770 /tmp/hadoop-yarn/staging/history/#{dir}/#{u}"
       timeout 300
       user node['cdap']['fs_superuser']

@@ -62,7 +62,7 @@ template '/etc/profile.d/cdap-sdk.sh' do
   owner 'root'
   group 'root'
   action :create
-  variables :options => { 'path' => "${PATH}:#{node['cdap']['sdk']['install_path']}/sdk/bin" }
+  variables options: { path: "${PATH}:#{node['cdap']['sdk']['install_path']}/sdk/bin" }
 end
 
 ark 'sdk' do

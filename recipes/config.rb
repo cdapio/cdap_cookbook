@@ -35,7 +35,7 @@ end
     mode sitefile == 'cdap_security' ? '0600' : '0644'
     owner 'cdap'
     group 'cdap'
-    variables :options => node['cdap'][sitefile]
+    variables options: node['cdap'][sitefile]
     action :create
   end
 end # End cdap-site.xml cdap-security.xml
@@ -47,7 +47,7 @@ if node['cdap'].key?('cdap_env')
     mode '0644'
     owner 'cdap'
     group 'cdap'
-    variables :options => node['cdap']['cdap_env']
+    variables options: node['cdap']['cdap_env']
     action :create
   end
 end # End cdap-env.sh

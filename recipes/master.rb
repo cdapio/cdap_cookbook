@@ -47,7 +47,7 @@ if hadoop_kerberos?
      node['cdap'].key?('cdap_site') && node['cdap']['cdap_site'].key?('kerberos.auth.enabled') &&
      node['cdap']['cdap_site']['kerberos.auth.enabled'].to_s == 'true'
 
-    my_vars = { :options => node['cdap']['kerberos'] }
+    my_vars = { options: node['cdap']['kerberos'] }
 
     directory '/etc/default' do
       owner 'root'
