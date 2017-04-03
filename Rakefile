@@ -7,16 +7,20 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:chefspec)
 
 # foodcritic rake task
+require 'foodcritic'
 desc 'Foodcritic linter'
-task :foodcritic do
-  sh 'foodcritic -f correctness .'
+FoodCritic::Rake::LintTask.new(:foodcritic) do |t|
+  t.options = {
+    fail_tags: ['correctness'],
+    progress: true,
+    context: true
+  }
 end
 
 # rubocop rake task
+require 'rubocop/rake_task'
 desc 'Ruby style guide linter'
-task :rubocop do
-  sh 'rubocop -D'
-end
+RuboCop::RakeTask.new(:rubocop)
 
 # creates metadata.json
 desc 'Create metadata.json from metadata.rb'
@@ -28,12 +32,6 @@ end
 desc 'Share cookbook to community site'
 task :share do
   sh 'knife cookbook site share cdap databases'
-end
-
-# run vagrant test
-desc 'Run vagrant tests'
-task :vagrant do
-  sh 'vagrant up'
 end
 
 # test-kitchen
