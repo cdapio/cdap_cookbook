@@ -44,8 +44,7 @@ if hadoop_kerberos?
 
   if node['cdap'].key?('kerberos') && node['cdap']['kerberos'].key?('cdap_keytab') &&
      node['cdap']['kerberos'].key?('cdap_principal') &&
-     node['cdap'].key?('cdap_site') && node['cdap']['cdap_site'].key?('kerberos.auth.enabled') &&
-     node['cdap']['cdap_site']['kerberos.auth.enabled'].to_s == 'true'
+     cdap_property?('kerberos.auth.enabled').to_s == 'true'
 
     directory '/etc/default' do
       owner 'root'

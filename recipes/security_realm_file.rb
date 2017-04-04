@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Recipe:: security_realm_file
 #
-# Copyright © 2013-2016 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 #
 
 # Manage Authentication realmfile
-if node['cdap']['cdap_site'].key?('security.authentication.basic.realmfile') && !node['cdap']['security']['realmfile'].empty?
+if cdap_property?('security.authentication.basic.realmfile') && !node['cdap']['security']['realmfile'].empty?
   realmfile = node['cdap']['cdap_site']['security.authentication.basic.realmfile']
   realmdir = ::File.dirname(realmfile)
 

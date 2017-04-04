@@ -24,7 +24,7 @@ if hadoop_kerberos?
 end
 
 princ =
-  if node['cdap']['cdap_site'].key?('cdap.master.kerberos.principal')
+  if cdap_property?('cdap.master.kerberos.principal')
     node['cdap']['cdap_site']['cdap.master.kerberos.principal']
   else
     "#{hdfs_user}/_HOST"
@@ -42,7 +42,7 @@ krb5_principal princ do
 end
 
 keytab =
-  if node['cdap']['cdap_site'].key?('cdap.master.kerberos.keytab')
+  if cdap_property?('cdap.master.kerberos.keytab')
     node['cdap']['cdap_site']['cdap.master.kerberos.keytab']
   else
     "#{node['krb5']['keytabs_dir']}/cdap.service.keytab"
@@ -81,7 +81,7 @@ ns_path = node['cdap']['cdap_site']['hdfs.namespace']
 hdfs_user = node['cdap']['cdap_site']['hdfs.user']
 # Workaround for CDAP-3817, by pre-creating the transaction service snapshot directory
 tx_snapshot_dir =
-  if node['cdap']['cdap_site'].key?('data.tx.snapshot.dir')
+  if cdap_property?('data.tx.snapshot.dir')
     node['cdap']['cdap_site']['data.tx.snapshot.dir']
   else
     "#{ns_path}/tx.snapshot"

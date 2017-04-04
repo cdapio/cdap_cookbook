@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Recipe:: security
 #
-# Copyright © 2013-2016 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,9 +38,9 @@ end
 
 # Manage Authentication realmfile
 if node['cdap']['security']['manage_realmfile'].to_s == 'true' &&
-   node.key?('cdap') && node['cdap'].key?('cdap_site') && node['cdap']['cdap_site'].key?('security.authentication.handlerClassName') &&
+   cdap_property?('security.authentication.handlerClassName') &&
    node['cdap']['cdap_site']['security.authentication.handlerClassName'] == 'co.cask.cdap.security.server.BasicAuthenticationHandler' &&
-   node['cdap']['cdap_site'].key?('security.authentication.basic.realmfile')
+   cdap_property?('security.authentication.basic.realmfile')
   include_recipe 'cdap::security_realm_file'
 end
 

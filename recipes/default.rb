@@ -20,7 +20,7 @@
 # Installs base package, creates log directory, and write out CDAP configuration
 include_recipe 'cdap::base'
 
-if node['cdap'].key?('cdap_env') && node['cdap']['cdap_env'].key?('log_dir')
+if cdap_property?('log_dir', 'cdap_env')
   cdap_log_dir = node['cdap']['cdap_env']['log_dir']
 
   directory cdap_log_dir do
@@ -29,7 +29,7 @@ if node['cdap'].key?('cdap_env') && node['cdap']['cdap_env'].key?('log_dir')
     mode '0755'
     action :create
     recursive true
-    only_if { node['cdap']['cdap_env'].key?('log_dir') }
+    only_if { cdap_property?('log_dir', 'cdap_env') }
   end
 
   unless cdap_log_dir == '/var/log/cdap'
