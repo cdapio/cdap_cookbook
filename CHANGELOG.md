@@ -1,6 +1,32 @@
 cdap CHANGELOG
 ==============
 
+v3.0.0 (Apr 4, 2017)
+--------------------
+
+BREAKING CHANGES:
+
+- Remove support for EOL versions of CDAP ( Issues: #218 #219 )
+  - This removes support for CDAP versions less than 3.0, including any supporting recipes.
+- Updates to CDAP::Helpers methods ( Issue: #227 )
+  - This prefixes all helper methods with `cdap_` to prevent them from conflicting with any other methods.
+  - Simplifies complex chained if conditionals into smaller methods
+
+OTHER CHANGES:
+
+- Handle deprecation of `ssl.enabled` ( Issues: #216 [COOK-116](https://issues.cask.co/browse/COOK-116) )
+- Update to CDAP 4.1.0-2 release ( Issue: #217 )
+- Properly set `metadata.updates.kafka.broker.list` ( Issues: #220 [COOK-85](https://issues.cask.co/browse/COOK-85) )
+- Initialize Kerberos tickets before use ( Issues: #221 [COOK-104](https://issues.cask.co/browse/COOK-104) )
+- Set SSL properties on `ssl.enabled` ( Issues: #222 [COOK-75](https://issues.cask.co/browse/COOK-75) )
+- Set `security.keytab.path` default ( Issues: #223 [COOK-117](https://issues.cask.co/browse/COOK-117) )
+- Recipe for cdap user ( Issues: 224 [COOK-92](https://issues.cask.co/browse/COOK-92) )
+- Switch to new Ruby 1.9+ Hash syntax ( Issue: #225 )
+- Remove `kstart`, `yum-epel` usage ( Issue: #226 )
+- Updates to testing framework and tests ( Issues: #228 #229 #230 #232 )
+- Use options directly, versus assigning to my_vars ( Issue: #231 )
+- Support HDP 2.6.0.3-8 ( Issue: #232 )
+
 v2.28.5 (Feb 17, 2017)
 ----------------------
 
