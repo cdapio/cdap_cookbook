@@ -1,6 +1,11 @@
 cdap CHANGELOG
 ==============
 
+v3.0.1 (Apr 6, 2017)
+--------------------
+
+- Fix a bug with variable assignment in `init` recipe ( Issue: #235 )
+
 v3.0.0 (Apr 4, 2017)
 --------------------
 
