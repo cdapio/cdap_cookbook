@@ -23,6 +23,7 @@ if hadoop_kerberos?
   include_recipe 'krb5::rkerberos_gem'
 end
 
+hdfs_user = node['cdap']['cdap_site']['hdfs.user']
 princ =
   if cdap_property?('cdap.master.kerberos.principal')
     node['cdap']['cdap_site']['cdap.master.kerberos.principal']
@@ -78,7 +79,6 @@ end
 # We also need the configuration, so we can run HDFS commands
 # Retries allow for orchestration scenarios where HDFS is starting up
 ns_path = node['cdap']['cdap_site']['hdfs.namespace']
-hdfs_user = node['cdap']['cdap_site']['hdfs.user']
 # Workaround for CDAP-3817, by pre-creating the transaction service snapshot directory
 tx_snapshot_dir =
   if cdap_property?('data.tx.snapshot.dir')

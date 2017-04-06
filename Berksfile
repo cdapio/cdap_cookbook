@@ -2,6 +2,7 @@ source 'https://supermarket.chef.io'
 
 if Chef::VERSION.to_f < 12.0
   cookbook 'apt', '< 4.0'
+  cookbook 'ark', '< 3.0'
   cookbook 'build-essential', '< 3.0'
   cookbook 'homebrew', '< 3.0'
   cookbook 'java', '< 1.48'
@@ -13,6 +14,7 @@ if Chef::VERSION.to_f < 12.0
   cookbook 'yum-epel', '< 2.0'
 elsif Chef::VERSION.to_f < 12.5
   cookbook 'apt', '< 6.0'
+  cookbook 'ark', '< 3.0'
   cookbook 'build-essential', '< 8.0'
   cookbook 'mingw', '< 2.0'
   cookbook 'ohai', '< 5.0'
