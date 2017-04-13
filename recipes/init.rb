@@ -91,7 +91,7 @@ user_path = "/user/#{hdfs_user}"
 # COOK-104 - Initialize keytabs
 %W(#{hdfs_user} #{node['cdap']['fs_superuser']}).uniq.each do |kt|
   execute "kinit-as-#{kt}" do
-    command "kinit -kt #{node['krb5']['keytabs_dir']}/#{kt}.service.keytab"
+    command "kinit -kt #{node['krb5']['keytabs_dir']}/#{kt}.service.keytab #{kt}/#{node['fqdn']}"
     user kt
     only_if { hadoop_kerberos? && ::File.exist?("#{node['krb5']['keytabs_dir']}/#{kt}.service.keytab") }
   end
