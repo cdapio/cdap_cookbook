@@ -1,6 +1,13 @@
 cdap CHANGELOG
 ==============
 
+v3.0.2 (Apr 13, 2017)
+---------------------
+
+- Update Berksfile and test Chef 13 ( Issues: #237 #239 )
+- Support platform_family amazon for Chef 13 ( Issues: #238 [COOK-123](https://issues.cask.co/browse/COOK-123) )
+- Set principal name to match keytab credentials ( Issue: #240 )
+
 v3.0.1 (Apr 6, 2017)
 --------------------
 
