@@ -62,7 +62,9 @@ if hadoop_kerberos?
       variables options: node['cdap']['kerberos']
     end # End /etc/default/cdap-master
 
-    group 'hadoop' do
+    hadoop_group = node['hadoop']['group'] ? node['hadoop']['group'] : "hadoop"
+
+    group hadoop_group do
       append true
       members ['cdap']
       action :modify
