@@ -1,6 +1,14 @@
 cdap CHANGELOG
 ==============
 
+v3.1.0 (May 23, 2017)
+---------------------
+
+- Support HDP 2.5.5.0 ( Issue: #242 )
+- Remove spark.yarn.am.extraJavaOptions ( Issue: #243 )
+- Enforce skip_prerequisites in sdk and security recipes ( Issues: #244 [COOK-124](https://issues.cask.co/browse/COOK-124) )
+- Default to OpenJDK ( Issue: #245 )
+
 v3.0.2 (Apr 13, 2017)
 ---------------------
 
