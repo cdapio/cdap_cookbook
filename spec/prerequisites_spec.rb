@@ -14,7 +14,7 @@ describe 'cdap::prerequisites' do
     end
 
     it 'logs JAVA_HOME' do
-      expect(chef_run).to write_log('JAVA_HOME = /usr/lib/jvm/java')
+      expect(chef_run).to write_log(/JAVA_HOME = .*/)
     end
 
     it 'logs about Explore being enabled' do

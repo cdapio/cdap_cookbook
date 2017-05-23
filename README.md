@@ -8,7 +8,7 @@
 
 ## Requirements
 
-* Oracle Java JDK 7+ with JCE
+* Java JDK 7+ with JCE
 * Hadoop 2.0+ HDFS, YARN, ZooKeeper, Hive, and HBase
 
 ## Usage
