@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Recipe:: sdk
 #
-# Copyright © 2015 Cask Data, Inc.
+# Copyright © 2015-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,9 +18,11 @@
 #
 
 # Dependencies
-%w(ark java nodejs).each do |recipe|
+%w(ark nodejs).each do |recipe|
   include_recipe recipe
 end
+
+include_recipe 'java' unless node['cdap'].key?('skip_prerequisites') && node['cdap']['skip_prerequisites'].to_s == 'true'
 
 link '/usr/bin/node' do
   to '/usr/local/bin/node'
@@ -29,8 +31,12 @@ link '/usr/bin/node' do
 end
 
 ver = node['cdap']['version'].gsub(/-.*/, '')
-ark_prefix_path = ::File.dirname(node['cdap']['sdk']['install_path']) if ::File.basename(node['cdap']['sdk']['install_path']) == "sdk-#{ver}"
-ark_prefix_path ||= node['cdap']['sdk']['install_path']
+ark_prefix_path =
+  if ::File.basename(node['cdap']['sdk']['install_path']) == "sdk-#{ver}"
+    ::File.dirname(node['cdap']['sdk']['install_path'])
+  else
+    node['cdap']['sdk']['install_path']
+  end
 
 directory ark_prefix_path do
   action :create
