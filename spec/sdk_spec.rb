@@ -32,6 +32,13 @@ describe 'cdap::sdk' do
       expect(chef_run).to create_template('/etc/profile.d/cdap-sdk.sh')
     end
 
+    it 'sets NODE_ENV in /etc/profile.d/cdap-sdk.sh' do
+      expect(chef_run).to render_file('/etc/profile.d/cdap-sdk.sh')
+        .with_content(
+          /NODE_ENV=/
+        )
+    end
+
     it 'creates cdap-sdk service and starts it' do
       expect(chef_run).to start_service('cdap-sdk')
       expect(chef_run).to enable_service('cdap-sdk')
