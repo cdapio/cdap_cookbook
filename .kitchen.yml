@@ -5,6 +5,9 @@ driver:
   customize:
     cpus: 2
     memory: 4096
+  network:
+    - ["forwarded_port", {guest: 11011, host: 11011}]
+    - ["forwarded_port", {guest: 11015, host: 11015}]
 
 provisioner:
   name: chef_solo
