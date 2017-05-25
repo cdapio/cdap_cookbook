@@ -12,17 +12,17 @@ provisioner:
   attributes:
     cdap:
       kafka:
-        init_actions: 'start'
+        init_actions: ['start']
       master:
-        init_actions: 'start'
+        init_actions: ['start']
       router:
-        init_actions: 'start'
+        init_actions: ['start']
       sdk:
-        init_actions: 'start'
+        init_actions: ['start']
       security:
-        init_actions: 'start'
+        init_actions: ['start']
       ui:
-        init_actions: 'start'
+        init_actions: ['start']
     hadoop:
       hdfs_site:
        'dfs.datanode.max.transfer.threads': 4096
@@ -30,9 +30,8 @@ provisioner:
       hive_site:
        'hive.support.concurrency': true
        'hive.zookeeper.quorum': 'localhost'
-
 platforms:
-  - name: centos-6.6
+  - name: centos-6.7
   - name: debian-6.0.10
     run_list:
     - apt::default
