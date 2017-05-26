@@ -2,7 +2,7 @@
 # Cookbook Name:: cdap
 # Attribute:: repo
 #
-# Copyright © 2013-2015 Cask Data, Inc.
+# Copyright © 2013-2017 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +20,6 @@
 release = node['cdap']['version'].to_f
 
 # URL to repository
-default['cdap']['repo']['apt_repo_url'] = "http://repository.cask.co/ubuntu/precise/amd64/cdap/#{release}"
+default['cdap']['repo']['apt_repo_url'] = "https://repository.cask.co/ubuntu/precise/amd64/cdap/#{release}"
 default['cdap']['repo']['apt_components'] = ['cdap']
-default['cdap']['repo']['yum_repo_url'] = "http://repository.cask.co/centos/6/x86_64/cdap/#{release}"
+default['cdap']['repo']['yum_repo_url'] = "https://repository.cask.co/centos/6/x86_64/cdap/#{release}"
