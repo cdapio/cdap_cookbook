@@ -1,6 +1,13 @@
 cdap CHANGELOG
 ==============
 
+v3.1.1 (May 30, 2017)
+---------------------
+
+- Fix Test Kitchen ( Issue: #247 )
+- Make /etc/profile.d/cdap-sdk.sh options configurable ( Issue: #248 )
+- Switch to HTTPS for repository.cask.co ( Issue: #249 )
+
 v3.1.0 (May 23, 2017)
 ---------------------
 
