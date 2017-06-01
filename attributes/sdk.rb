@@ -91,12 +91,17 @@ default['cdap']['sdk']['checksum'] =
 default['cdap']['sdk']['install_path'] = '/opt/cdap'
 default['cdap']['sdk']['user'] = 'cdap'
 default['cdap']['sdk']['manage_user'] = true
-default['cdap']['sdk']['profile_d']['node_env'] = ''
-default['cdap']['sdk']['profile_d']['path'] = "${PATH}:#{node['cdap']['sdk']['install_path']}/sdk/bin"
-default['cdap']['sdk']['init_name'] = 'SDK'
+default['cdap']['sdk']['init_name'] =
+  if node['cdap']['version'].to_f >= 4.2
+    'Sandbox'
+  else
+   'SDK'
+  end
 default['cdap']['sdk']['init_krb5'] = false
 default['cdap']['sdk']['init_cmd'] =
-  if node['cdap']['version'].to_f < 4.0
+  if node['cdap']['version'].to_f >= 4.2
+    "#{node['cdap']['sdk']['install_path']}/sandbox/bin/cdap sandbox"
+  elsif node['cdap']['version'].to_f < 4.0
     "#{node['cdap']['sdk']['install_path']}/sdk/bin/cdap.sh"
   else
     "#{node['cdap']['sdk']['install_path']}/sdk/bin/cdap sdk"
@@ -108,3 +113,5 @@ if node['cdap']['version'].to_f >= 4.0
   default['nodejs']['version'] = '4.5.0'
   default['nodejs']['binary']['checksum']['linux_x64'] = nil
 end
+default['cdap']['sdk']['profile_d']['node_env'] = ''
+default['cdap']['sdk']['profile_d']['path'] = "${PATH}:#{node['cdap']['sdk']['install_path']}/#{node['cdap']['sdk']['init_name'].downcase}/bin"

@@ -31,12 +31,14 @@ link '/usr/bin/node' do
 end
 
 ver = node['cdap']['version'].gsub(/-.*/, '')
+install_path = node['cdap']['sdk']['install_path']
 ark_prefix_path =
-  if ::File.basename(node['cdap']['sdk']['install_path']) == "sdk-#{ver}"
-    ::File.dirname(node['cdap']['sdk']['install_path'])
+  if ::File.basename(install_path) == "sdk-#{ver}" || ::File.basename(install_path) == "sandbox-#{ver}"
+    ::File.dirname(install_path)
   else
-    node['cdap']['sdk']['install_path']
+    install_path
   end
+svc = node['cdap']['sdk']['init_name']
 
 directory ark_prefix_path do
   action :create
@@ -44,15 +46,14 @@ directory ark_prefix_path do
 end
 
 user node['cdap']['sdk']['user'] do
-  comment 'CDAP SDK Service Account'
-  home node['cdap']['sdk']['install_path']
+  comment "CDAP #{svc} Service Account"
   shell '/bin/bash'
   system true
   action :create
   only_if { node['cdap']['sdk']['manage_user'].to_s == 'true' }
 end
 
-template '/etc/init.d/cdap-sdk' do
+template "/etc/init.d/cdap-#{svc.downcase}" do
   source 'cdap-service.erb'
   mode '0755'
   owner 'root'
@@ -61,8 +62,7 @@ template '/etc/init.d/cdap-sdk' do
   variables node['cdap']['sdk']
 end
 
-# COOK-98
-template '/etc/profile.d/cdap-sdk.sh' do
+template "/etc/profile.d/cdap-#{svc.downcase}.sh" do
   source 'generic-env.sh.erb'
   mode '0644'
   owner 'root'
@@ -71,7 +71,17 @@ template '/etc/profile.d/cdap-sdk.sh' do
   variables options: node['cdap']['sdk']['profile_d']
 end
 
-ark 'sdk' do
+# Cleanup older SDK stuff on upgrade, guarded with conditional versus guard to prevent duplicate resources
+unless svc == 'SDK'
+  file '/etc/init.d/cdap-sdk' do
+    action :delete
+  end
+  file '/etc/profile.d/cdap-sdk.sh' do
+    action :delete
+  end
+end
+
+ark svc.downcase do
   url node['cdap']['sdk']['url']
   prefix_root ark_prefix_path
   prefix_home ark_prefix_path
@@ -79,9 +89,9 @@ ark 'sdk' do
   version ver
   owner node['cdap']['sdk']['user']
   group node['cdap']['sdk']['user']
-  notifies :restart, 'service[cdap-sdk]', :delayed if node['cdap']['sdk']['init_actions'].include?(:start)
+  notifies :restart, "service[cdap-#{svc.downcase}]", :delayed if node['cdap']['sdk']['init_actions'].include?(:start)
 end
 
-service 'cdap-sdk' do
+service "cdap-#{svc.downcase}" do
   action node['cdap']['sdk']['init_actions']
 end
