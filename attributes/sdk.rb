@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-# TODO: This cookbook has some derived attributes here. Use caution if wrapping.
-
 # URL to repository
 ver = node['cdap']['version'].gsub(/-.*/, '')
 
