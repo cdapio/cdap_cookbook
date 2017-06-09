@@ -32,7 +32,7 @@ end
 
 ver = node['cdap']['version'].gsub(/-.*/, '')
 ark_prefix_path =
-  if ::File.basename(node['cdap']['sdk']['install_path']) == "sdk-#{ver}"
+  if %W(sdk-#{ver} sandbox-#{ver}).include? ::File.basename(node['cdap']['sdk']['install_path'])
     ::File.dirname(node['cdap']['sdk']['install_path'])
   else
     node['cdap']['sdk']['install_path']
@@ -44,7 +44,7 @@ directory ark_prefix_path do
 end
 
 user node['cdap']['sdk']['user'] do
-  comment 'CDAP SDK Service Account'
+  comment "CDAP #{node['cdap']['sdk']['product_name'].upcase} Service Account"
   home node['cdap']['sdk']['install_path']
   shell '/bin/bash'
   system true
@@ -52,7 +52,7 @@ user node['cdap']['sdk']['user'] do
   only_if { node['cdap']['sdk']['manage_user'].to_s == 'true' }
 end
 
-template '/etc/init.d/cdap-sdk' do
+template "/etc/init.d/cdap-#{node['cdap']['sdk']['product_name']}" do
   source 'cdap-service.erb'
   mode '0755'
   owner 'root'
@@ -62,7 +62,7 @@ template '/etc/init.d/cdap-sdk' do
 end
 
 # COOK-98
-template '/etc/profile.d/cdap-sdk.sh' do
+template "/etc/profile.d/cdap-#{node['cdap']['sdk']['product_name']}.sh" do
   source 'generic-env.sh.erb'
   mode '0644'
   owner 'root'
@@ -72,6 +72,7 @@ template '/etc/profile.d/cdap-sdk.sh' do
 end
 
 ark 'sdk' do
+  name node['cdap']['sdk']['product_name']
   url node['cdap']['sdk']['url']
   prefix_root ark_prefix_path
   prefix_home ark_prefix_path
@@ -79,9 +80,9 @@ ark 'sdk' do
   version ver
   owner node['cdap']['sdk']['user']
   group node['cdap']['sdk']['user']
-  notifies :restart, 'service[cdap-sdk]', :delayed if node['cdap']['sdk']['init_actions'].include?(:start)
+  notifies :restart, "service[cdap-#{node['cdap']['sdk']['product_name']}]", :delayed if node['cdap']['sdk']['init_actions'].include?(:start)
 end
 
-service 'cdap-sdk' do
+service "cdap-#{node['cdap']['sdk']['product_name']}" do
   action node['cdap']['sdk']['init_actions']
 end

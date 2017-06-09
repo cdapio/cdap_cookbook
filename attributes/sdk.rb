@@ -17,9 +17,27 @@
 # limitations under the License.
 #
 
+# TODO: This cookbook has some derived attributes here. Use caution if wrapping.
+
 # URL to repository
 ver = node['cdap']['version'].gsub(/-.*/, '')
-default['cdap']['sdk']['url'] = "http://repository.cask.co/downloads/co/cask/cdap/cdap-sdk/#{ver}/cdap-sdk-#{ver}.zip"
+
+# Set download location based on version
+default['cdap']['sdk']['url'] =
+  if ver.to_f < 4.2
+    "http://repository.cask.co/downloads/co/cask/cdap/cdap-sdk/#{ver}/cdap-sdk-#{ver}.zip"
+  else
+    "http://downloads.cask.co/cdap-sandbox/cdap-sandbox-#{ver}.zip"
+  end
+
+# product_name is the outward facing name in the install path, init script, etc
+default['cdap']['sdk']['product_name'] =
+  if node['cdap']['version'].to_f < 4.2
+    'sdk'
+  else
+    'sandbox'
+  end
+
 # shasum -a 256 filename
 default['cdap']['sdk']['checksum'] =
   case ver
@@ -89,19 +107,23 @@ default['cdap']['sdk']['checksum'] =
     'a952fad174d50efef62c4b103f6d9ae0d5d0e22b378d1b5da9030de19451d0b7'
   when '4.1.1'
     'd1cc052aa0bf924b5f0934c0d6c14a1b25c969c570ed3117e202c7b1eddc04a7'
+  when '4.2.0'
+    'd593b38c0382e244f7390b1e1a8c1dfcd551db20b898976d544b1c01e25221d7'
   end
 default['cdap']['sdk']['install_path'] = '/opt/cdap'
 default['cdap']['sdk']['user'] = 'cdap'
 default['cdap']['sdk']['manage_user'] = true
 default['cdap']['sdk']['profile_d']['node_env'] = ''
-default['cdap']['sdk']['profile_d']['path'] = "${PATH}:#{node['cdap']['sdk']['install_path']}/sdk/bin"
-default['cdap']['sdk']['init_name'] = 'SDK'
+default['cdap']['sdk']['profile_d']['path'] = "${PATH}:#{node['cdap']['sdk']['install_path']}/#{node['cdap']['sdk']['product_name']}/bin"
+default['cdap']['sdk']['init_name'] = node['cdap']['sdk']['product_name'].upcase
 default['cdap']['sdk']['init_krb5'] = false
 default['cdap']['sdk']['init_cmd'] =
   if node['cdap']['version'].to_f < 4.0
-    "#{node['cdap']['sdk']['install_path']}/sdk/bin/cdap.sh"
+    "#{node['cdap']['sdk']['install_path']}/#{node['cdap']['sdk']['product_name']}/bin/cdap.sh"
+  elsif node['cdap']['version'].to_f < 4.2
+    "#{node['cdap']['sdk']['install_path']}/#{node['cdap']['sdk']['product_name']}/bin/cdap sdk"
   else
-    "#{node['cdap']['sdk']['install_path']}/sdk/bin/cdap sdk"
+    "#{node['cdap']['sdk']['install_path']}/#{node['cdap']['sdk']['product_name']}/bin/cdap sandbox"
   end
 default['cdap']['sdk']['init_actions'] = [:enable, :start]
 # Get proper Node.js version on SDK 4.0+
