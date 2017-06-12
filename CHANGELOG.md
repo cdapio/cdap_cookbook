@@ -1,6 +1,12 @@
 cdap CHANGELOG
 ==============
 
+v3.2.0 (Jun 12, 2017)
+---------------------
+
+- Support CDAP 4.1.1 ( Issue: #251 )
+- Set CDAP 4.2.0 as default, and rename SDK to Sandbox ( Issue: #252 )
+
 v3.1.1 (May 30, 2017)
 ---------------------
 
