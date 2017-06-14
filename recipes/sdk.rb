@@ -76,7 +76,7 @@ ark 'sdk' do
   url node['cdap']['sdk']['url']
   prefix_root ark_prefix_path
   prefix_home ark_prefix_path
-  checksum node['cdap']['sdk']['checksum']
+  checksum node['cdap']['sdk']['checksum'] if node['cdap']['sdk']['enforce_checksum'].to_s == 'true'
   version ver
   owner node['cdap']['sdk']['user']
   group node['cdap']['sdk']['user']
