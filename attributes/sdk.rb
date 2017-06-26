@@ -36,6 +36,8 @@ default['cdap']['sdk']['product_name'] =
     'sandbox'
   end
 
+# Enforce checksum matching by default
+default['cdap']['sdk']['enforce_checksum'] = true
 # shasum -a 256 filename
 default['cdap']['sdk']['checksum'] =
   case ver
