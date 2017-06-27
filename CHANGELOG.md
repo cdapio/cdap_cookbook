@@ -1,6 +1,12 @@
 cdap CHANGELOG
 ==============
 
+v3.2.1 (Jun 26, 2017)
+---------------------
+
+- Ability to disable checksum enforcing ( Issue: #254 )
+- Support HDP 2.6.1.0 ( Issue: #255 )
+
 v3.2.0 (Jun 12, 2017)
 ---------------------
 
