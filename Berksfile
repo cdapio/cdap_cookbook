@@ -10,6 +10,7 @@ if Chef::VERSION.to_f < 12.0
   cookbook 'homebrew', '< 3.0'
   cookbook 'java', '< 1.48'
   cookbook 'mingw', '< 1.0'
+  cookbook 'nodejs', '< 4.0'
   cookbook 'ohai', '< 4.0'
   cookbook 'selinux', '< 1.0'
   cookbook 'windows', '< 2.0'
