@@ -1,6 +1,11 @@
 cdap CHANGELOG
 ==============
 
+v3.2.2 (Aug 9, 2017)
+--------------------
+
+- Configure repos correctly on Debian ( Issue: #257 )
+
 v3.2.1 (Jun 26, 2017)
 ---------------------
 
