@@ -12,6 +12,7 @@ end
 
 depends 'hadoop', '>= 2.0.0'
 depends 'krb5', '>= 2.2.1'
+depends 'ulimit', '< 1.0.0'
 
 %w(amazon centos debian redhat scientific ubuntu).each do |os|
   supports os
