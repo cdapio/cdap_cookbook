@@ -20,9 +20,9 @@ if RUBY_VERSION.to_f < 2.0
   gem 'mixlib-shellout', '< 2.3.0'
   gem 'net-http-persistent', '< 3.0'
   gem 'nio4r', '< 2.0'
-  gem 'nokogiri', '< 1.7'
+  gem 'nokogiri'
   gem 'rack', '< 2.0'
-  gem 'rubocop', '< 0.42'
+  gem 'rubocop'
   gem 'varia_model', '< 0.5.0'
 elsif RUBY_VERSION.to_f == 2.0
   gem 'buff-ignore', '< 1.2'
@@ -35,7 +35,7 @@ elsif RUBY_VERSION.to_f == 2.0
   gem 'mixlib-shellout', '< 2.3.0'
   gem 'net-http-persistent', '< 3.0'
   gem 'nio4r', '< 2.0'
-  gem 'nokogiri', '< 1.7'
+  gem 'nokogiri'
   gem 'rack', '< 2.0'
   gem 'rubocop'
 elsif RUBY_VERSION.to_f == 2.1
