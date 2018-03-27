@@ -1,6 +1,11 @@
 cdap CHANGELOG
 ==============
 
+v3.3.3 (Mar 27, 2018)
+---------------------
+- Update rubocop gem ( Issue #271 )
+- Support CDAP 4.3.4 ( Issue #272 )
+
 v3.3.2 (Jan 15, 2018)
 ---------------------
 
