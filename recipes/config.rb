@@ -27,9 +27,21 @@ directory cdap_conf_dir do
   recursive true
 end
 
+# Evaluate any Delayed Interpolation tokens
+Chef::Recipe.send(:include, Hadoop::Helpers)
+delayed_attrs = { _FULL_VERSION: hdp_version }
+
 # Setup cdap-site.xml cdap-security.xml
 %w(cdap_site cdap_security).each do |sitefile|
   next unless node['cdap'].key?(sitefile)
+
+  # Evaluate any Delayed Interpolation tokens in cdap-site attributes
+  if node['cdap'].key?(sitefile) && !node['cdap'][sitefile].empty?
+    node['cdap'][sitefile].each do |k, v|
+      node.default['cdap'][sitefile][k] = v % delayed_attrs
+    end
+  end
+
   template "#{cdap_conf_dir}/#{sitefile.tr('_', '-')}.xml" do
     source 'generic-site.xml.erb'
     mode sitefile == 'cdap_security' ? '0600' : '0644'
@@ -39,6 +51,13 @@ end
     action :create
   end
 end # End cdap-site.xml cdap-security.xml
+
+# Evaluate any Delayed Interpolation tokens in cdap-env attributes
+if node['cdap'].key?('cdap_env') && !node['cdap']['cdap_env'].empty?
+  node['cdap']['cdap_env'].each do |k, v|
+    node.default['cdap']['cdap_env'][k] = v % delayed_attrs
+  end
+end
 
 # Setup cdap-env.sh
 template "#{cdap_conf_dir}/cdap-env.sh" do
