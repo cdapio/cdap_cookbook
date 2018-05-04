@@ -1,0 +1,6 @@
+name: cdap-simple
+title: Integration tests for CDAP basic functionality
+summary: This InSpec profile contains integration tests for CDAP
+version: 0.0.1
+supports:
+  - os-family: linux
