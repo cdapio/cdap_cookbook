@@ -1,6 +1,12 @@
 cdap CHANGELOG
 ==============
 
+v3.4.0 (May 4, 2018)
+--------------------
+- Use Hadoop cookbook's helper library to evaluate HDP build number instead of maintaining our own ( Issue: #274 )
+- Add systemd-reload capability for sdk recipe ( Issue: #275 )
+- Update testing framework to modern standards ( Issue: #276 )
+
 v3.3.3 (Mar 27, 2018)
 ---------------------
 - Update rubocop gem ( Issue #271 )
