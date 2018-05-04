@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'cdap::ssl_keystore_certificates' do
   context 'with SSL disabled' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
         node.automatic['domain'] = 'example.com'
       end.converge(described_recipe)
     end
@@ -21,7 +21,7 @@ describe 'cdap::ssl_keystore_certificates' do
 
   context 'with SSL enabled' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
         node.automatic['domain'] = 'example.com'
         node.default['cdap']['cdap_site']['ssl.enabled'] = true
         node.default['cdap']['cdap_security']['security.server.ssl.keystore.password'] = 'password'

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'cdap::base' do
   context 'using default cdap version' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
         node.automatic['domain'] = 'example.com'
         stub_command(/update-alternatives --display /).and_return(false)
         stub_command(/test -L /).and_return(false)
