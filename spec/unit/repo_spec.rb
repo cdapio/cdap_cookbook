@@ -32,9 +32,9 @@ describe 'cdap::repo' do
     end
   end
 
-  context 'on Ubuntu 12.04 using default version' do
+  context 'on Ubuntu 14.04 using default version' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: 12.04).converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: 14.04).converge(described_recipe)
     end
 
     it 'adds cdap-4.3 apt repository' do
