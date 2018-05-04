@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'cdap::prerequisites' do
   context 'using default cdap version' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
         node.automatic['domain'] = 'example.com'
         node.default['hadoop']['hdfs_site']['dfs.datanode.max.transfer.threads'] = '4096'
         node.default['hadoop']['mapred_site']['mapreduce.framework.name'] = 'yarn'
@@ -24,7 +24,7 @@ describe 'cdap::prerequisites' do
 
   context 'using CDAP 3.0' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
         node.automatic['domain'] = 'example.com'
         node.default['hadoop']['hdfs_site']['dfs.datanode.max.transfer.threads'] = '4096'
         node.default['hadoop']['mapred_site']['mapreduce.framework.name'] = 'yarn'

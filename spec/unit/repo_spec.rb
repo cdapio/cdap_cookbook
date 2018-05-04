@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'cdap::repo' do
-  context 'on Centos 6.6 x86_64 using default version' do
+  context 'on Centos 6.9 x86.94 using default version' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6).converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9).converge(described_recipe)
     end
 
     it 'adds cdap-4.3 yum repository' do
@@ -21,7 +21,7 @@ describe 'cdap::repo' do
   ).each do |ver|
     context "using #{ver.split('-').first}" do
       let(:chef_run) do
-        ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+        ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
           node.override['cdap']['version'] = ver
         end.converge(described_recipe)
       end

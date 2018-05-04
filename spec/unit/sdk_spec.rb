@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'cdap::sdk' do
   context 'using sdk version 4.1.0' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
         node.automatic['domain'] = 'example.com'
         node.override['cdap']['version'] = '4.1.0-2'
         node.default['cdap']['sdk']['install_dir'] = '/opt/cdap'
@@ -34,7 +34,7 @@ describe 'cdap::sdk' do
 
   context 'using default cdap version' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.6) do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9) do |node|
         node.automatic['domain'] = 'example.com'
         node.default['cdap']['sdk']['install_dir'] = '/opt/cdap'
         stub_command('test -e /usr/bin/node').and_return(true)
