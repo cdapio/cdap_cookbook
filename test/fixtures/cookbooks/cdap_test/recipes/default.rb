@@ -14,4 +14,4 @@
 #  node.default['hive']['hive_env']['java_home'] = node['java']['java_home']
 # end
 
-include_recipe 'hadoop_test::sdk'
+include_recipe 'cdap_test::sdk'

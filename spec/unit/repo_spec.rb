@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'cdap::repo' do
-  context 'on Centos 6.9 x86.94 using default version' do
+  context 'on Centos 6.9 x86_64 using default version' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: 6.9).converge(described_recipe)
     end
