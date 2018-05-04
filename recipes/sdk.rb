@@ -59,6 +59,7 @@ template "/etc/init.d/cdap-#{node['cdap']['sdk']['product_name']}" do
   group 'root'
   action :create
   variables node['cdap']['sdk']
+  notifies :run, 'execute[systemd-daemon-reload]', :immediately
 end
 
 # COOK-98
@@ -81,6 +82,12 @@ ark 'sdk' do
   owner node['cdap']['sdk']['user']
   group node['cdap']['sdk']['user']
   notifies :restart, "service[cdap-#{node['cdap']['sdk']['product_name']}]", :delayed if node['cdap']['sdk']['init_actions'].include?(:start)
+end
+
+execute 'systemd-daemon-reload' do
+  command 'systemctl daemon-reload'
+  action :nothing
+  only_if { node['init_package'] == 'systemd' }
 end
 
 service "cdap-#{node['cdap']['sdk']['product_name']}" do
