@@ -57,7 +57,7 @@ module CDAP
         elsif cdap_property?('security.server.ssl.enabled')
           node['cdap']['cdap_site']['security.server.ssl.enabled']
         end
-      ssl_enabled.to_s == 'true' ? true : false
+      ssl_enabled.to_s == 'true'
     end
 
     #
@@ -70,7 +70,7 @@ module CDAP
         else
           'JKS'
         end
-      jks == 'JKS' ? true : false
+      jks == 'JKS'
     end
 
     #
