@@ -72,8 +72,7 @@ template "/etc/profile.d/cdap-#{node['cdap']['sdk']['product_name']}.sh" do
   variables options: node['cdap']['sdk']['profile_d']
 end
 
-ark 'sdk' do
-  name node['cdap']['sdk']['product_name']
+ark node['cdap']['sdk']['product_name'] do
   url node['cdap']['sdk']['url']
   prefix_root ark_prefix_path
   prefix_home ark_prefix_path
