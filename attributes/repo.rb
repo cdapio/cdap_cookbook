@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 
-release = node['cdap']['version'].to_f
+# major.minor
+release = node['cdap']['version'][/^\d+\.\d+/]
 
 # URL to repository
 default['cdap']['repo']['apt_repo_url'] = "https://repository.cask.co/ubuntu/precise/amd64/cdap/#{release}"
