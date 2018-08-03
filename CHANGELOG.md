@@ -1,6 +1,11 @@
 cdap CHANGELOG
 ==============
 
+v3.5.0 (Aug 3, 2018)
+--------------------
+- Set only JDK-version appropriate JVM options ( Issue: #278 )
+- Support CDAP 5.0.0 ( Issue #279 )
+
 v3.4.0 (May 4, 2018)
 --------------------
 - Use Hadoop cookbook's helper library to evaluate HDP build number instead of maintaining our own ( Issue: #274 )
