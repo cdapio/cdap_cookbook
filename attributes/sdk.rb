@@ -138,8 +138,13 @@ default['cdap']['sdk']['init_cmd'] =
     "#{node['cdap']['sdk']['install_path']}/#{node['cdap']['sdk']['product_name']}/bin/cdap sandbox"
   end
 default['cdap']['sdk']['init_actions'] = [:enable, :start]
-# Get proper Node.js version on SDK 4.0+
-if node['cdap']['version'].to_f >= 4.0
+
+# Get proper Node.js version on SDK
+if node['cdap']['version'].to_i >= 5
+  default['nodejs']['install_method'] = 'binary'
+  default['nodejs']['version'] = '8.7.0'
+  default['nodejs']['binary']['checksum']['linux_x64'] = nil
+elsif node['cdap']['version'].to_i >= 4
   default['nodejs']['install_method'] = 'binary'
   default['nodejs']['version'] = '4.5.0'
   default['nodejs']['binary']['checksum']['linux_x64'] = nil
