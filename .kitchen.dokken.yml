@@ -57,4 +57,4 @@ suites:
       - recipe[cdap::sdk]
     attributes:
       java:
-        jdk_version: '7' 
+        jdk_version: '8'
