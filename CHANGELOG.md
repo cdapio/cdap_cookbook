@@ -1,6 +1,12 @@
 cdap CHANGELOG
 ==============
 
+v3.6.0 (Oct 17, 2018)
+---------------------
+- update nodeJS default version for CDAP 5.0 ( Issue: #281 )
+- Support CDAP 5.1.0 ( Issue #282 )
+- Use Java 8 by default ( Issue #283 )
+
 v3.5.0 (Aug 3, 2018)
 --------------------
 - Set only JDK-version appropriate JVM options ( Issue: #278 )

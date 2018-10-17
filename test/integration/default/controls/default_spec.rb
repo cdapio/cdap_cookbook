@@ -15,7 +15,7 @@ end
 
 [
   'ps auxww | grep -i cdap',
-  '/opt/cdap/sandbox/bin/cdap cli list namespaces | grep "Default Namespace"',
+  '/opt/cdap/sandbox/bin/cdap cli list namespaces | grep "default"',
 ].each do |cmd|
   describe command(cmd) do
     its('exit_status') { should eq 0 }
