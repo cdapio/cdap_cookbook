@@ -1,6 +1,10 @@
 cdap CHANGELOG
 ==============
 
+v3.6.1 (Nov 15, 2018)
+---------------------
+- Support CDAP 5.1.1 and 4.3.5 ( Issue #285 )
+
 v3.6.0 (Oct 17, 2018)
 ---------------------
 - update nodeJS default version for CDAP 5.0 ( Issue: #281 )
