@@ -91,9 +91,16 @@ service 'cdap-master' do
   action node['cdap']['master']['init_actions']
 end
 
+upgrade_class =
+  if node['cdap']['version'].to_f >= 6.0
+    'io.cdap.cdap.data.tools.UpgradeTool'
+  else
+    'co.cask.cdap.data.tools.UpgradeTool'
+  end
+
 # CDAP Upgrade Tool
 execute 'cdap-upgrade-tool' do
-  command "#{node['cdap']['master']['init_cmd']} run co.cask.cdap.data.tools.UpgradeTool upgrade force"
+  command "#{node['cdap']['master']['init_cmd']} run #{upgrade_class} upgrade force"
   action :nothing
   user node['cdap']['master']['user']
 end
