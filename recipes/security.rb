@@ -38,7 +38,8 @@ end
 # Manage Authentication realmfile
 if node['cdap']['security']['manage_realmfile'].to_s == 'true' &&
    cdap_property?('security.authentication.handlerClassName') &&
-   node['cdap']['cdap_site']['security.authentication.handlerClassName'] == 'co.cask.cdap.security.server.BasicAuthenticationHandler' &&
+   (node['cdap']['cdap_site']['security.authentication.handlerClassName'] == 'co.cask.cdap.security.server.BasicAuthenticationHandler' ||
+   node['cdap']['cdap_site']['security.authentication.handlerClassName'] == 'io.cdap.cdap.security.server.BasicAuthenticationHandler') &&
    cdap_property?('security.authentication.basic.realmfile')
   include_recipe 'cdap::security_realm_file'
 end
