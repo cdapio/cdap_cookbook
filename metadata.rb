@@ -17,6 +17,6 @@ depends 'krb5', '>= 2.2.1'
   supports os
 end
 
-source_url 'https://github.com/caskdata/cdap_cookbook' if respond_to?(:source_url)
+source_url 'https://github.com/cdapio/cdap_cookbook' if respond_to?(:source_url)
 issues_url 'https://issues.cask.co/browse/COOK/component/10603' if respond_to?(:issues_url)
 chef_version '>= 11' if respond_to?(:chef_version)
