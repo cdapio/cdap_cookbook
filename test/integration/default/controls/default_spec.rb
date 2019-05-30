@@ -1,4 +1,3 @@
-
 describe directory('/opt/cdap') do
   it { should exist }
   it { should be_readable }

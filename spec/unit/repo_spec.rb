@@ -37,8 +37,8 @@ describe 'cdap::repo' do
       ChefSpec::SoloRunner.new(platform: 'ubuntu', version: 14.04).converge(described_recipe)
     end
 
-    it 'adds cdap-5.1 apt repository' do
-      expect(chef_run).to add_apt_repository('cdap-5.1')
+    it 'adds cdap-6.0 apt repository' do
+      expect(chef_run).to add_apt_repository('cdap-6.0')
     end
 
     it 'deletes cask apt repository' do

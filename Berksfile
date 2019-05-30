@@ -45,6 +45,8 @@ elsif Chef::VERSION.to_f < 12.9
 elsif Chef::VERSION.to_f < 12.14
   cookbook 'ulimit', '< 1.0.0'
   cookbook 'yum', '< 5.0'
+elsif Chef::VERSION.to_f < 13.0
+  cookbook 'seven_zip', '< 3.0.0'
 end
 
 metadata
