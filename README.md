@@ -2,8 +2,7 @@
 
 [![Cookbook Version](http://img.shields.io/cookbook/v/cdap.svg)](https://supermarket.chef.io/cookbooks/cdap)
 [![Apache License 2.0](http://img.shields.io/badge/license-apache%202.0-green.svg)](http://opensource.org/licenses/Apache-2.0)
-[![Build Status](http://img.shields.io/travis/caskdata/cdap_cookbook.svg)](http://travis-ci.org/caskdata/cdap_cookbook)
-[![Code Climate](https://codeclimate.com/github/caskdata/cdap_cookbook/badges/gpa.svg)](https://codeclimate.com/github/caskdata/cdap_cookbook)
+[![Build Status](http://img.shields.io/travis/cdapio/cdap_cookbook.svg)](http://travis-ci.org/cdapio/cdap_cookbook)
 [![Build Status](https://jenkins-01.eastus.cloudapp.azure.com/job/cdap-cookbook/badge/icon)](https://jenkins-01.eastus.cloudapp.azure.com/job/cdap-cookbook/)
 
 ## Requirements

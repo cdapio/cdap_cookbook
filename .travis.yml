@@ -30,6 +30,8 @@ install: echo "skip bundle install"
 services: docker
 
 env:
+  global:
+  -  CHEF_LICENSE=accept
   matrix:
   - INSTANCE=default-centos-6
   - INSTANCE=default-centos-7

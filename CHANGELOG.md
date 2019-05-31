@@ -222,7 +222,7 @@ v2.24.0 (Sep 14, 2016)
 v2.23.2 (Sep 8, 2016)
 ---------------------
 
-- Revert changes to init scripts until caskdata/cdap#6574 is merged ( Issue: #158 )
+- Revert changes to init scripts until cdapio/cdap#6574 is merged ( Issue: #158 )
 
 v2.23.1 (Sep 1, 2016)
 ---------------------
@@ -268,4 +268,4 @@ v2.20.0 (May 10, 2016)
 - Setting `security.server.ssl.enabled` should set `ssl.enabled` ( Issues: #129 [COOK-74](https://issues.cask.co/browse/COOK-74) )
 - Update SDK hashes and default to CDAP 3.4.0 ( Issue: #131 )
 
-Previous release CHANGELOGs are available on the project's [GitHub Releases](https://github.com/caskdata/cdap_cookbook/releases).
+Previous release CHANGELOGs are available on the project's [GitHub Releases](https://github.com/cdapio/cdap_cookbook/releases).
