@@ -13,6 +13,7 @@ if Chef::VERSION.to_f < 12.0
   cookbook 'nodejs', '< 4.0'
   cookbook 'ohai', '< 4.0'
   cookbook 'selinux', '< 1.0'
+  cookbook 'seven_zip', '< 3.0'
   cookbook 'sysctl', '< 0.10'
   cookbook 'ulimit', '< 1.0.0'
   cookbook 'windows', '< 2.0'
@@ -27,6 +28,7 @@ elsif Chef::VERSION.to_f < 12.5
   cookbook 'nodejs', '< 5.0'
   cookbook 'ohai', '< 5.0'
   cookbook 'selinux', '< 1.0'
+  cookbook 'seven_zip', '< 3.0'
   cookbook 'sysctl', '< 0.10'
   cookbook 'ulimit', '< 1.0.0'
   cookbook 'windows', '< 3.0'
@@ -34,19 +36,22 @@ elsif Chef::VERSION.to_f < 12.5
 elsif Chef::VERSION.to_f < 12.6
   cookbook 'apt', '< 6.0'
   cookbook 'nodejs', '< 5.0'
+  cookbook 'seven_zip', '< 3.0'
   cookbook 'ulimit', '< 1.0.0'
   cookbook 'windows', '< 3.0'
   cookbook 'yum', '< 5.0'
 elsif Chef::VERSION.to_f < 12.9
   cookbook 'apt', '< 6.0'
   cookbook 'nodejs', '< 5.0'
+  cookbook 'seven_zip', '< 3.0'
   cookbook 'ulimit', '< 1.0.0'
   cookbook 'yum', '< 5.0'
 elsif Chef::VERSION.to_f < 12.14
+  cookbook 'seven_zip', '< 3.0'
   cookbook 'ulimit', '< 1.0.0'
   cookbook 'yum', '< 5.0'
 elsif Chef::VERSION.to_f < 13.0
-  cookbook 'seven_zip', '< 3.0.0'
+  cookbook 'seven_zip', '< 3.0'
 end
 
 metadata
