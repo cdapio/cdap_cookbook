@@ -2,6 +2,10 @@ source 'https://supermarket.chef.io'
 
 require 'chef/version'
 
+puts "************* Chef Version: #{Chef::VERSION}"
+puts "************* Chef Version: #{Chef::VERSION.to_f}"
+
+
 if Chef::VERSION.to_f < 12.0
   cookbook 'apt', '< 4.0'
   cookbook 'ark', '< 3.0'
